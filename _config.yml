@@ -2,5 +2,5 @@ markdown: rdiscount
 permalink: /:year/:month/:title/
 url: http://flybread.github.io/
 author: flybread
-pygments: true
+highlighter: pygments
 paginate: 24
