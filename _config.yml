@@ -1,4 +1,5 @@
 markdown: rdiscount
+rdiscount：extensions: ["tables"]
 permalink: /:year/:month/:title/
 url: http://flybread.github.io/
 author: flybread
