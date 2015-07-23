@@ -131,7 +131,7 @@ private final AtomicInteger ctl = new AtomicInteger(ctlOf(RUNNING, 0));
 
 首先我们还要看一下 addWorker的说明，然后看看里面的逻辑，线程池增加了一个任务，具体都做了什么？
 
-![](file:///G:/gitProject/flyBread.github.io/media/pic/addWorker.PNG)
+![](../../../media/pic/addWorker.PNG)
 第一个参数表示执行的任务，第二个参数比较边界的选择，是CorePoolsize 还是max 那个值。如果线程池的状态可以，也就是说
 能够创建线程，并且线程池没有关闭，运行的线程数小于corePoolSize，那么启动第一个参数代表的线程。
 
