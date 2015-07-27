@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "java Java Concurrency  6"
+title: "Concurrence-6-Creating and Starting Java Threads"
 description: "翻译 梳理基础的东西"
 category: 翻译 java 并发编程 多线程
 tags: [翻译 并发编程 多线程]
