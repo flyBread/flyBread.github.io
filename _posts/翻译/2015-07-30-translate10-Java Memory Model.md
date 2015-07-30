@@ -12,56 +12,59 @@ tags: [翻译 并发编程 多线程]
 
 文章的地址：[翻译文章的源地址](http://tutorials.jenkov.com/java-concurrency/java-memory-model.html)
 <br/>
-竞争条件只有在多个线程访问相同的资源，以及一个或多个线程写入资源时才会出现。
-如果多个线程读取相同的资源竞争条件是不发生。我们可以确保线程之间共享对象
-不更新以便使共享对象不变，从而线程安全的。下面是一个示例：    
 
-```
-public class ImmutableValue{
-  private int value = 0;
-  public ImmutableValue(int value){
-    this.value = value;
-  }
-  public int getValue(){
-    return this.value;
-  }
-}
-```
+Java内存模型说明了Java虚拟机是如何使用计算机内存(RAM)的。Java虚拟机是对整个电脑的模型化，
+该模型自然的就包括内存模型-就是Java的内存模型。   
 
-备注：ImmutableValue实例的值传递给构造函数。注意到没有setter方法设置这个值。 也就是说
-ImmutableValue实例创建后不能更改其值。它是不可变的。 然而你可以使用getValue()方法获取它的值。  
+如果想要设计出来运行良好的多线程程序，理解java内存模型就是非常必要的。java内存模型说明了多个
+线程是如何得到被其他线程写入的共享值，当必要的时候又是如何同步协作的访问共享变量。   
 
-如果你需要操作ImmutableValue实例的值，你可以在操作运算后返回一个新的实例，下面就是add的方法：   
-  
- 
-```
- public ImmutableValue add(int valueToAdd){
-      return new ImmutableValue(this.value + valueToAdd);
-      }
-```
+最初的Java内存模型是不完善的，所以Java 1.5中的Java内存模型进行了修订。此版本的Java内存模型
+现在仍在使用Java 8中。    
 
-备注：add方法直接返回了一个实例，并且构造函数中接受的是加操作之后的值，而不是返回value所在的实例。   
+java内存模型的内在
+在JVM中，java内存模型内在的被分为了线程栈和内存堆，下面这张图可以从逻辑的角度说明java内存模型：
 
-引用不是线程安全的  
-如果对象是不变的，那么它是线程安全的，但是对于它的引用可能不是线程安全的，见下例：   
-   
-```
-public class Calculator{
-  private ImmutableValue currentValue = null;
-  public ImmutableValue getValue(){
-    return currentValue;
-  }
-  public void setValue(ImmutableValue newValue){
-    this.currentValue = newValue;
-  }
-  public void add(int newValue){
-    this.currentValue = this.currentValue.add(newValue);
-  }
-}
-```  
+![](http://tutorials.jenkov.com/images/java-concurrency/java-memory-model-1.png)    
 
-类Calculator 包含一个对ImmutableValue实例的引用，即使是使用了内部不可变的对象，现在也通过setValue方法和add方法你能够改变引用值， 
-所以这个引用本身不是不可变的，所以它不是线程安全的。换句话说，就是不可变的类是线程安全的，但是对他的引用不是的。在通过不变形保证
-线程安全时，需要记住这一点。
+在JVM中运行的每一个线程都有自己的线程栈，线程栈中包含到达当前执行的代码线程必须调用的方法，我常
+把这个称之为调用栈，随着线程执行代码，调用栈随之发生变化。    
 
-如果想要Calculator这个类线程安全，你可以声明getValue(), setValue(), and add()是同步方法。
+线程栈中也会包含所有被执行方法（调用栈中的所有的方法）的局部变量，一个线程只能够访问它自己的线程
+栈，局部变量只对创建它的那个线程可见，对其他的线程是不可见的。
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
