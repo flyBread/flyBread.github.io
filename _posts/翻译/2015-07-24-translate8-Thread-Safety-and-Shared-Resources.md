@@ -50,7 +50,8 @@ public void method2(LocalObject localObject){
 
 对象成员
 对象成员存储堆中，位于对象附近。因此如果两个线程调用同一个实例的同一个方法，这个方法更新对象的成员，那么这个方法就是线程不安全的，
-下面为对象成员的线程不安全事例：
+下面为对象成员的线程不安全事例：  
+
 ```
 public class NotThreadSafe{
     StringBuilder builder = new StringBuilder();
@@ -80,7 +81,9 @@ public class MyRunnable implements Runnable{
 注意到一点，两个MyRunnable实例共享的是同一个NotThreadSafe实例，因此当它们调用NotThreadSafe实例的add方法的时候，将会
 导致竞争条件。
 
-然而，如果两个线程同时调用add方法是基于不同的NotThreadSafe实例，那么就不会导致竞争条件，下面是对上面示例的小小修改：
+然而，如果两个线程同时调用add方法是基于不同的NotThreadSafe实例，那么就不会导致竞争条件，
+下面是对上面示例的小小修改：    
+
 ```
 new Thread(new MyRunnable(new NotThreadSafe())).start();
 new Thread(new MyRunnable(new NotThreadSafe())).start();
@@ -90,7 +93,7 @@ new Thread(new MyRunnable(new NotThreadSafe())).start();
 所以，即使一个对象不是线程安全的，它也能够以一种没有竞争条件的方式使用。
 
 线程控制逃脱规则
-当需要确定你的代码访问的某一个资源是不是线程安全的时候，你需要使用线程控制逃脱规则
+当需要确定你的代码访问的某一个资源是不是线程安全的时候，你需要使用线程控制逃脱规则    
 
 	If a resource is created, used and disposed within the control of the same thread, 
 	and never escapes the control of this thread, the use of that resource is thread safe.
@@ -100,13 +103,15 @@ new Thread(new MyRunnable(new NotThreadSafe())).start();
 
 即使调用的对象是线程安全的，如果那个对象。指向一个共享的资源，比如：文件，数据库，你的应用从整体上
 说可能不是线程安全的。例如，如果线程1和线程2每个都创建他们自己的数据库连接，连接1和连接2，连接本身的
-使用时线程安全的。但是使用数据库连接可能导致线程的不安全，例如，如果两个线程执行的代码如下：
+使用时线程安全的。但是使用数据库连接可能导致线程的不安全，例如，如果两个线程执行的代码如下：     
+ 
 ```
 check if record X exists
 if not, insert record X
 ```
 如果两个线程同时执行上面的伪代码，被检查的记录X恰好是同一个记录，那么就有可能两个线程全部的都插入了记录X
-说明如下：
+说明如下：   
+
 ```
 Thread 1 checks if record X exists. Result = no
 Thread 2 checks if record X exists. Result = no
