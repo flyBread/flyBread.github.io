@@ -77,7 +77,9 @@ java内存模型的内在
 像，对象1和对象5，理论上，如果两个线程都含有对两个对象的引用，那么两个线程都能够访问对象1和对象5
 但是在上图中，每一个线程只拥有针对其中一个对象的引用。  
 
-然而，上图中对应的java代码是怎么样的呢？如下所示：  
+然而，上图中对应的java代码是怎么样的呢？如下所示：     
+
+
 ```
 public class MyRunnable implements Runnable() {
     public void run() {
@@ -96,6 +98,7 @@ public class MyRunnable implements Runnable() {
     }
 }
 ```
+
 
 ```
 public class MySharedObject {
