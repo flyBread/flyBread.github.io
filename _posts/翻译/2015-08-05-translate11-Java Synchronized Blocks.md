@@ -127,11 +127,70 @@ public class MyClass {
 有一个线程在跑。   
 
 #### java同步的示例
+下面这个例子中，表示如果有两个线程都调用counter的同一个实例上面的add方法，在某一个时刻在这个相同的实例上
+只能有一个线程调用add方法，因为add方法是同步在是归属的实例上。    
 
+```
+ public class Counter{
+     long count = 0;
+     public synchronized void add(long value){
+       this.count += value;
+     }
+  }
+```
 
+```
+public class CounterThread extends Thread{
+     protected Counter counter = null;
+     public CounterThread(Counter counter){
+        this.counter = counter;
+     }
+     public void run() {
+	for(int i=0; i<10; i++){
+           counter.add(i);
+        }
+     }
+  }
+```    
 
+```
+  public class Example {
+    public static void main(String[] args){
+      Counter counter = new Counter();
+      Thread  threadA = new CounterThread(counter);
+      Thread  threadB = new CounterThread(counter);
+      threadA.start();
+      threadB.start(); 
+    }
+  }
+```
 
+两个线程被创建以后，相同的一个counter被传入了线程的构造的方法。方法Counter.add()方法是同步时实例上面的，
+因为add方法是实例的方法，并且被标记为了同步方法，因此，同一时间只能有一个线程访问add方法，另外的一个线程
+会一直等待知道第一个线程离开add方法才能够执行add方法。   
 
+如果两个线程引用的是counter的不同的实例，那么它们同时调用add方法就没有什么问题，因为这个调用会大道不同的
+实例上，然后方法会在不同的实例（各个方法归属的实例）上面进行同步，因此不会被阻塞。代码如下:   
+
+```
+public class Example {
+    public static void main(String[] args){
+      Counter counterA = new Counter();
+      Counter counterB = new Counter();
+      Thread  threadA = new CounterThread(counterA);
+      Thread  threadB = new CounterThread(counterB);
+      threadA.start();
+      threadB.start(); 
+    }
+  }
+```
+
+备注上面的代码中，两个线程A和B，不在针对同一个Counter实例，counterA和counterB上面的add方法同步在
+各自归属的实例上，所以线程A调用counterA上面的add方法不会阻塞线程调用counterB上面的add方法。    
+
+#### 并发编程工具
+尽管synchronized关键字是java第一个关于访问多线程共享变量的方法，但是synchronized机制不是很先进。这也就是
+java5提供了一个 concurrency 具集合的原因，这个工具集合能够来帮助开发者比synchronized更细粒度的控制并发
 
 
 
