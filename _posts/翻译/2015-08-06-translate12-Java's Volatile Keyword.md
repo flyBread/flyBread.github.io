@@ -59,7 +59,53 @@ counter的值0读入了cpu1的寄存器里面，同时或者在这之后，线�
 回counter，两个都把1写回内存中。但是两次增加后，counter的值应该是2。    
 
 关于多线程的一个线程，不能够看到变量的最新的值因为这个值还没有被另外更新的线程写入内存里面，叫做可见性的问题
-一个线程的更新对另一个线程不可见的。
+一个线程的更新对另一个线程不可见的。    
+
+#### java volatile 确保的事情
+
+自从java5以来，volatile关键字不仅仅确保直接从内存中读写变量，而且volatile关键字还确保其他的事情：   
+
+如果线程A对一个volatile 变量进行写操作，线程B同时对这个变量进行读操作，在写之前的，多有的变量对A是可见的，
+那么对B也是可见的。   
+
+另外JVM在考虑到性能的原因，在不影响逻辑行为的情况下，会对指令进行从新排列。但是关于volatile变量的读和写
+指令不会被JVM重排，指令的前后可能会被重排，但是volatile变量的读或者写不会和那些指令混合，无论跟在读或者写
+volatile指令后面是什么指令都会保证运行的时候还是什么指令。    
+
+如下例：   
+
+```
+Thread A:
+    sharedObject.nonVolatile = 123;
+    sharedObject.counter     = sharedObject.counter + 1;
+Thread B:
+    int counter     = sharedObject.counter;
+    int nonVolatile = sharedObject.nonVolatile;
+```
+
+因为线程A写非volatile变量sharedObject.nonVolatile 在写 volatile变量 sharedObject.counter 之前，   
+所以 sharedObject.nonVolatile 和 sharedObject.counter 都会被写回内存。   
+
+因为线程B读 非volatile变量sharedObject.nonVolatile 在读 volatile变量 sharedObject.counter 之前，   
+所以 sharedObject.nonVolatile 和 sharedObject.counter 都是从内存中读取的。  
+
+
+发生在volatile变量前后的，对非volatile变量读和写指令，是不会被重排打乱顺序的。
+
+#### volatile使用场景
+
+就像上面提到的，如果两个线程对一个变量都有读写操作，单单的使用volatile修饰变量是不够的，我们需要使用
+synchronized 来保证变量的读取和写入是原子操作。  
+
+但是如果只有一个变量对volatile共享变量是读写操作，另外的变量只是读取变量，那么读取线程就能够看到写入
+volatile变量的最新的值。如果没有volatile修饰这个变量，是不能够保证看到最新的值的。    
+
+#### volatile的性能
+
+读写volatile变量使得数据只能从内存中读写。从内存中读写要比从CPU缓存中花费要高，访问volatile变量前面的
+指令是不能够重排的，而重排也是提高性能的一个方法，因此当必须使用volatile变量的时候，我们一般才会使用volatile
+变量，不可滥用。
+
 
 
 
