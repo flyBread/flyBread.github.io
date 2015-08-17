@@ -87,6 +87,117 @@ Thread 2: child.setParent(parent); //locks child
 A和B两个锁，线程2就会在试图锁B的时候被阻塞。这样就不会有死锁的发生。因为线程调度是无法预测的，所以没有办法
 来预测一个死锁的发生。
 
+#### 更加复杂的死锁
+
+死锁可能关联的线程不止两个，这也使得死锁更加的难以发现，下面是一个四个线程引发的死锁的例子：    
+
+```
+Thread 1  locks A, waits for B
+Thread 2  locks B, waits for C
+Thread 3  locks C, waits for D
+Thread 4  locks D, waits for A
+``` 
+
+简单的说，就是线程1等待线程2，线程2等待线程3，线程3等待线程4，线程4等待线程1.    
+
+#### 数据库死锁
+
+死锁一个比较复杂的场景是：数据库的事物。一个数据库的事务可能包含很多的SQL更新请求。在一个事务里面当一条记录被
+更新的时候，这条记录就会被这个事务锁住，不让其他的事务操作，直到第一个事务完成。在同一个事务里，每一个更新请求
+可能锁的是数据库中相同的几条记录。
+
+如果同时运行的多个事务，需要去更新相同的记录，就有可能发生死锁。例如：        
+
+```
+Transaction 1, request 1, locks record 1 for update
+Transaction 2, request 1, locks record 2 for update
+Transaction 1, request 2, tries to lock record 2 for update.
+Transaction 2, request 2, tries to lock record 1 for update.
+```
+
+因为锁操作是发生在不同的请求的，在开始之前一个给定的事务不可能知道全部的锁，所以发现和阻止数据库事务中的锁是
+很困难的。  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
