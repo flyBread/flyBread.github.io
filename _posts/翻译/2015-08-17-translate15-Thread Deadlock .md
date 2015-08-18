@@ -116,7 +116,7 @@ Transaction 2, request 2, tries to lock record 1 for update.
 ```
 
 因为锁操作是发生在不同的请求的，在开始之前一个给定的事务不可能知道全部的锁，所以发现和阻止数据库事务中的锁是
-很困难的。  
+比较困难的。  
 
 
 
