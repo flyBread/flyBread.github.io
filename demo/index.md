@@ -4,4 +4,4 @@ layout: demo
 comments: true
 ---
   
- <a href="./demo1.html"  title="Demo" >第一个测试</a>
+ <a href="./html/demo2.html"  title="Demo" >第一个测试</a>

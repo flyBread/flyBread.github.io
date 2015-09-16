@@ -13,6 +13,7 @@ x.innerHTML="Hello JavaScript!";    // 改变内容
 x.style.color="#ff0000";   
 };
 
+//改变图片的格式
 function changeImage(){
 	element=document.getElementById('myimage');
 	if (element.src.match("bulbon")) {
@@ -29,5 +30,7 @@ var x=document.getElementById("input").value;
 if(x==""||isNaN(x))
 	{
 	alert("请输入数字，您输入的不是数字。");
+	}else{
+		document.getElementById("input").innerHTML = "您输入的是数字："+x;
 	}
 };
