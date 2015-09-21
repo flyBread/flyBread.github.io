@@ -101,12 +101,82 @@ public class RecevingThread {
 ```
 #### 计数信号量
 
-上面Semaphore
+上面Semaphore类的实现不能够统计出take调用的次数，也就是信号发送的次数。
+变换一下实现，我们可以改写成为一个计数的信号量，如下所示：  
 
+```
+public class CountingSemaphore {
+  private int signals = 0;
 
+  public synchronized void take() {
+    this.signals++;
+    this.notify();
+  }
 
+  public synchronized void release() throws InterruptedException{
+    while(this.signals == 0) wait();
+    this.signals--;
+  }
 
+}
+```
 
+#### 边界信号量
+
+CountingSemaphore没有设置它储存的信号量的上线，我们可以改变一下信号的
+实现的方式,如下：  
+
+```
+public class BoundedSemaphore {
+  private int signals = 0;
+  private int bound   = 0;
+
+  public BoundedSemaphore(int upperBound){
+    this.bound = upperBound;
+  }
+
+  public synchronized void take() throws InterruptedException{
+    while(this.signals == bound) wait();
+    this.signals++;
+    this.notify();
+  }
+
+  public synchronized void release() throws InterruptedException{
+    while(this.signals == 0) wait();
+    this.signals--;
+    this.notify();
+  }
+}
+```
+
+现在take方法，只有到信号到达了上线的时候，线程才会被阻塞。
+> 感觉 while循环里面的条件应该变为 this.signals >= bound   
+仔细想想感觉还是应该是原来的条件。   
+
+#### 把信号量当做锁来使用
+
+如果把边界信号量的边界设置为1，使用take和release方法就能够保护临界区，
+代码如下：   
+
+```
+BoundedSemaphore semaphore = new BoundedSemaphore(1);
+
+...
+
+semaphore.take();
+
+try{
+  //critical section
+} finally {
+  semaphore.release();
+}
+```
+
+take 和 release 方法就像锁的lock 和 unlock 一样。    
+
+如果我们把BoundSemaphore的上线设置为5，那么在同一时间内，可能就会有
+五个线程进入临界区里面。当然，我们需要保证临界区有五个线程不会出现冲突，
+否则应用就会出现错误。
 
 
 
