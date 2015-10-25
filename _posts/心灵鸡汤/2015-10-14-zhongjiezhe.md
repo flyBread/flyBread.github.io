@@ -24,15 +24,4 @@ tags: [反省,庸人不自扰]
 
 另外，还是得在博客中学会插入图片，不然就会丧失很多的乐趣，例如：    
 
-![](file:///../../_site/media/pic2014/0201-5.png)
-
-![](../../_site/media/pic2014/0201-5.png)
-
-![](./4a02712cf60693d124863eba26714b8b_b.jpg)
-
-
-![](file:///./4a02712cf60693d124863eba26714b8b_b.jpg)
-
-![](file:///4a02712cf60693d124863eba26714b8b_b.jpg)
-
-![](file:///G:/gitProject/flyBread.github.io/_posts/心灵鸡汤/4a02712cf60693d124863eba26714b8b_b.jpg)
+![](http://i.imgur.com/Cl4Y6BS.jpg)
