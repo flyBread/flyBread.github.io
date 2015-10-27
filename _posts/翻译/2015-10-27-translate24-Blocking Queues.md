@@ -71,6 +71,16 @@ public class BlockingQueue {
 JDK的实现的简单的阻塞队列：   
 
 ```
+import java.util.concurrent.locks.Condition;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+
+/**
+ * @author zhailzh
+ * 
+ * @Date 2015年10月27日——下午1:57:15
+ * 
+ */
 public class SimplyBlockingQueue {
 	final Lock lock = new ReentrantLock();
 	final Condition notFull = lock.newCondition();
@@ -123,11 +133,76 @@ public class SimplyBlockingQueue {
 			lock.unlock();
 		}
 	}
+	
+	public static void main(String[] args) {
+		final SimplyBlockingQueue boundedBuffer = new SimplyBlockingQueue();
+		
+		Thread t1 = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				System.out.println("t1 run");
+				for (int i=0;i<1000;i++) {
+					try {
+						System.out.println("putting value ：" +i );
+						boundedBuffer.put(Integer.valueOf(i));
+						Thread.sleep(1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+		}) ;
+		
+		Thread t2 = new Thread(new Runnable() {
+			@Override
+			public void run() {
+				for (int i=0;i<1000;i++) {
+					try {
+						Object val = boundedBuffer.take();
+						System.out.println("消耗了："+val);
+
+						Thread.sleep(5000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				}
+			}
+			
+		}) ;
+		
+		t1.start();
+		t2.start();
+	}
 }
 
 ```
 
+测试结果：     
 
+```
+no elements, please wait
+t1 run
+putting value ：0
+消耗了：0
+putting value ：1
+putting value ：2
+putting value ：3
+putting value ：4
+消耗了：1
+putting value ：5
+putting value ：6
+putting value ：7
+putting value ：8
+putting value ：9
+消耗了：2
+putting value ：10
+putting value ：11
+putting value ：12
+putting value ：13
+buffer full, please wait
+消耗了：3
+```
 
 
 
