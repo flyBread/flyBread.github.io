@@ -9,9 +9,9 @@ tags: [翻译 并发编程 多线程]
 <br/>
 ##### 信号量
 <br/>
-
 [文章的源地址](http://tutorials.jenkov.com/java-concurrency/semaphores.html)
 <br/>
+
 大意翻译，逐字逐句的翻译太累了，并且只为了翻译而翻译，不是看这篇文章的本意，
 故采取大意翻译，当然首先还是得一句一句得看懂得，毕竟追求得就是看懂文章。   
 
