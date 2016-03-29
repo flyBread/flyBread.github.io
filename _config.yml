@@ -6,3 +6,4 @@ author: flybread
 highlighter: pygments
 paginate: 35
 encoding: UTF-8
+gems: [jekyll-paginate]
