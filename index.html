@@ -8,13 +8,16 @@ layout: page
   {% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
   {% capture m %}{{post.date | date:"%m"}}{% endcapture %}
   {% if year != y or  month != m %}
-    {% assign year = y %} 
+    {% assign year = y %}
 	{% assign month = m %}
     <li class="listing-seperator">{{ y }} 年 {{m}} 月 </li>
   {% endif %}
   <li class="listing-item">
     <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
     <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+  </li>
+  <li class="listing-item">
+    <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;简述：{{post.description}} </p>
   </li>
 {% endfor %}
 </ul>
@@ -52,4 +55,3 @@ layout: page
   {% endif %}
   (共{{ paginator.total_posts }}篇)
 </div>
-
