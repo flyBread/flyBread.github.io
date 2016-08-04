@@ -3,7 +3,7 @@
 permalink: /:year/:month/:title/
 url: http://flybread.github.io/
 author: flybread
-highlighter: pygments
+rouge: pygments
 paginate: 35
 encoding: UTF-8
 gems: [jekyll-paginate]
