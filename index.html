@@ -2,25 +2,23 @@
 title: 飞翔的面包
 layout: page
 ---
-
-<ul class="listing">
+<ul class="posts">
 {% for post in paginator.posts %}
   {% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
   {% capture m %}{{post.date | date:"%m"}}{% endcapture %}
   {% if year != y or  month != m %}
-    {% assign year = y %}
+  {% assign year = y %}
 	{% assign month = m %}
     <li class="listing-seperator">{{ y }} 年 {{m}} 月 </li>
   {% endif %}
+  <hr/>
   <li class="listing-item">
     <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-    <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
+    <a class="listing-seperator" href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
   </li>
-  <li class="listing-item">
-    <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;简述：{{post.description}} </p>
-  </li>
-		<p> <a href="{{ post.url }}"><span >阅读全文 &raquo;</span></a></p>
-    <br/>
+	<p>{% if post.excerpt.size > 32 %}{{ post.excerpt }}{% else %}{{ post.content | strip_html | strip_newlines | truncate: 160 }}{% endif %}</p>
+
+		<p> <a href="{{ post.url }}"><span >阅读全文 &raquo; </span></a></p>
 {% endfor %}
 </ul>
 
