@@ -2,6 +2,7 @@
 title: 飞翔的面包
 layout: page
 ---
+
 <ul class="posts">
 {% for post in paginator.posts %}
   {% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
@@ -11,14 +12,18 @@ layout: page
 	{% assign month = m %}
     <li class="listing-seperator">{{ y }} 年 {{m}} 月 </li>
   {% endif %}
-  <hr/>
-  <li class="listing-item">
-    <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-    <a class="listing-seperator" href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-  </li>
-	<p>{% if post.excerpt.size > 32 %}{{ post.excerpt }}{% else %}{{ post.content | strip_html | strip_newlines | truncate: 160 }}{% endif %}</p>
-
-		<p> <a href="{{ post.url }}"><span >阅读全文 &raquo; </span></a></p>
+  <div class="content-block ng-scope">
+    <div class="content-heading">
+      <h2 class="title"><small>{{ post.title }}</small></h2>
+      <div class="date"><time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time></div>
+    </div>
+    <div class="content-body">	<p>{% if post.excerpt.size > 32 %}{{ post.excerpt }}{% else %}{{ post.content | strip_html | strip_newlines | truncate: 160 }}{% endif %}</p></div>
+    <div class="content-footer">
+      <span class="label label-info">{{post.tags}}</span>
+      <a href="{{ post.url }}" class="read" >阅读全文</a>
+      <div class="clear"></div>
+    </div>
+  </div>
 {% endfor %}
 </ul>
 
