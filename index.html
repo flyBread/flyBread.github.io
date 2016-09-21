@@ -7,11 +7,15 @@ layout: page
 {% for post in paginator.posts %}
   {% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
   {% capture m %}{{post.date | date:"%m"}}{% endcapture %}
+  {% capture postcategory %}{{post.category}}{% endcapture %}
+
   {% if year != y or  month != m %}
   {% assign year = y %}
 	{% assign month = m %}
     <li class="listing-seperator">{{ y }} 年 {{m}} 月 </li>
   {% endif %}
+
+{% if postcategory != "hiddle" %}
   <div class="content-block ng-scope">
     <div class="content-heading">
       <h2 class="title"><small>{{ post.title }}</small></h2>
@@ -24,6 +28,7 @@ layout: page
       <div class="clear"></div>
     </div>
   </div>
+  {% endif %}
 {% endfor %}
 </ul>
 
