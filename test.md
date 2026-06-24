@@ -1,6 +1,6 @@
 
 ---
-title: ·ÉÏèµÄÃæ°ü
+title: XXXX
 layout: page
 ---
 
