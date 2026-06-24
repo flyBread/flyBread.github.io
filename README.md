@@ -1,6 +1,3 @@
-此Git库为我的博客 使用Jekyll进行搭建，博客文章的评论功能使用了Disqus。
-
-如果你直接拷贝或Fork本Git库作为自己的博客，一定不要忘记删除我写的文章和Git历史（删除.git文件夹）以及修改 `_includes / comments.md` 中的disqus_shortname，以及修改 `_layouts / default.html`中 google analytics的标识  `_gaq.push(['_setAccount', 'UA-12936429-2']);`。
-
-最后感谢您的配合。
-
+2020年05月21日：改换一个更加简单的样式   
+2022年 01 月 08 日：我们的征途是星辰大海
+2022年 09 月 02 日：我们再次出发，坚定目标

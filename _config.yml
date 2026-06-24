@@ -1,9 +1,42 @@
-markdown: rdiscount
-rdiscount：extensions: ["tables"]
-permalink: /:year/:month/:title/
-url: http://flybread.github.io/
-author: flybread
-highlighter: pygments
-paginate: 35
-encoding: UTF-8
-gems: [jekyll-paginate]
+# ---------------- #
+#   Main Configs   #
+# ---------------- #
+baseurl:
+url: https://andihappy5.github.io
+date_format: "ordinal"
+title: 飞翔的面包
+author: Happy Zhai 
+
+# email: zlzdbf@gmail.com
+
+# ---------------- #
+#      Jekyll      #
+# ---------------- #
+markdown: kramdown
+kramdown:
+    input: GFM
+paginate: 20
+permalink: /:year/:month/:day/:title/
+#gems:
+plugins:
+    - jekyll-paginate
+    - jekyll-sitemap
+    - jekyll-feed
+    # - jemoji
+collections:
+    wiki:
+        output: true
+        permalink: /wiki/:path/
+
+# ---------------- #
+#      Comments    #
+# ---------------- #
+# support provider: disqus, gitment, gitalk
+comments_provider: gitalk
+#gitalk:
+#    owner: AndiHappy
+#    repo: andihappy.github.io
+#    clientID: e261fd11c0ff17251934
+#    clientSecret: d6d09672a7172a9b422ec63898d542d00d441bd1
+## 在使用其它评论组件时可点击显示 Disqus
+#lazy_load_disqus : false

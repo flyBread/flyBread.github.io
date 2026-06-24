@@ -1,55 +1,37 @@
 ---
-title: 飞翔的面包
-layout: page
+layout: default
+description: Andi Happy, andiHappy, 飞翔的面包, FlyBread Blog
+keywords: 技术,programmer,翟,andiHappy,
 ---
 
-<ul class="listing">
-{% for post in paginator.posts %}
-  {% capture y %}{{post.date | date:"%Y"}}{% endcapture %}
-  {% capture m %}{{post.date | date:"%m"}}{% endcapture %}
-  {% if year != y or  month != m %}
-    {% assign year = y %} 
-	{% assign month = m %}
-    <li class="listing-seperator">{{ y }} 年 {{m}} 月 </li>
-  {% endif %}
-  <li class="listing-item">
-    <time datetime="{{ post.date | date:"%Y-%m-%d" }}">{{ post.date | date:"%Y-%m-%d" }}</time>
-    <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a>
-  </li>
-{% endfor %}
-</ul>
 
-<div id="post-pagination" class="paginator">
+<!--        <div class="date"> {{ post.date | date: "%b %d, %Y" }} </div>-->
+<!--        <div class="detail">-->
+<!--            <a href="{{ site.url }}{{ post.url }}" style="padding: 20px;">{{ post.title }}</a>-->
+<!--            <p/>-->
+<!--        </div>-->
+<!--    </div>-->
 
-  {% if paginator.previous_page %}
-    {% if paginator.previous_page == 1 %}
-    <a href="/"><前页</a>
-    {% else %}
-    <a href="/page{{paginator.previous_page}}"><前页</a>
-    {% endif %}
-  {% else %}
-    <span class="previous disabled"><前页</span>
-  {% endif %}
+<!--        {% for tag in post.tags %}-->
+<!--        <a href="/tags/google">{{ tag }}}</a>&nbsp;-->
+<!--        {% endfor %}-->
 
-      {% if paginator.page == 1 %}
-      <span class="current-page">1</span>
-      {% else %}
-      <a href="/">1</a>
-      {% endif %}
+<div class="postlist">
+    <div class="article-header light-gray">
+        <div class="h1-light-gray">Recent Articles</div>
+    </div>
 
-    {% for count in (2..paginator.total_pages) %}
-      {% if count == paginator.page %}
-      <span class="current-page">{{count}}</span>
-      {% else %}
-      <a href="/page{{count}}">{{count}}</a>
-      {% endif %}
+<div class="overview">
+    {% for post in paginator.posts %}
+        <div class="summary">
+            <div><a href="{{ site.url }}{{ post.url }} ">{{ post.title }}</a></div>
+            <div class="meta">{{ post.date | date: "%b %d, %Y"  }};
+                        {% for tag in post.categories %}
+                        <a href="/categories/#{{tag}}"> #{{ tag }} </a>&nbsp;
+                        {% endfor %}
+            </div>
+        </div>
     {% endfor %}
-
-  {% if paginator.next_page %}
-    <a class="next" href="/page{{paginator.next_page}}">后页></a>
-  {% else %}
-    <span class="next disabled" >后页></span>
-  {% endif %}
-  (共{{ paginator.total_posts }}篇)
 </div>
 
+{% include pagination.html %}
